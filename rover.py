@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, List, NamedTuple
+from typing import Any, NamedTuple
 
 
 class Delta(NamedTuple):
@@ -43,17 +43,25 @@ class Position(NamedTuple):
     def __add__(self, delta: Any) -> "Position":
         if not isinstance(delta, Delta):
             raise ValueError
+
+        x = self.x + delta.dx
+        y = self.y + delta.dy
+
         return Position(
-            x=self.x + delta.dx,
-            y=self.y + delta.dy,
+            x=1 if x > 5 else x,
+            y=1 if y > 5 else y,
         )
 
     def __sub__(self, delta: Any) -> "Position":
         if not isinstance(delta, Delta):
             raise ValueError
+
+        x = self.x - delta.dx
+        y = self.y - delta.dy
+
         return Position(
-            x=self.x - delta.dx,
-            y=self.y - delta.dy,
+            x=5 if x < 1 else x,
+            y=5 if y < 1 else y,
         )
 
 
@@ -70,12 +78,13 @@ class Rover:
     def position(self) -> Position:
         return self._position
 
-    def execute(self, commands: List[str]) -> None:
-        if commands[0] == "r":
-            self._direction = self._direction.right()
-        elif commands[0] == "l":
-            self._direction = self._direction.left()
-        elif commands[0] == "f":
-            self._position = self._position + self._direction.value
-        elif commands[0] == "b":
-            self._position = self._position - self._direction.value
+    def execute(self, commands: str) -> None:
+        for command in commands:
+            if command == "r":
+                self._direction = self._direction.right()
+            elif command == "l":
+                self._direction = self._direction.left()
+            elif command == "f":
+                self._position = self._position + self._direction.value
+            elif command == "b":
+                self._position = self._position - self._direction.value
