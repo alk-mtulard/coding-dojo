@@ -1,0 +1,31 @@
+# os
+.DS_Store
+
+# python
+**/*.pyc
+env/
+.venv
+*.egg-info/
+.vscode
+.eggs
+.noseids
+
+# params
+*/application/config/parameters_*.yml
+
+# test
+.coverage
+.pytest_cache
+xunit.xml
+nosetests.xml
+sloccount.sc
+.mypy_cache
+
+# Container
+/cache
+
+# IDE config files
+.idea/
+
+# make
+Makefile.local.mk
